@@ -1,7 +1,7 @@
 package com.tabelafipe.main;
 
 import com.tabelafipe.model.*;
-import com.tabelafipe.services.ConsultaApi;
+import com.tabelafipe.services.ApiRequest;
 import com.tabelafipe.services.JsonToObjectConverter;
 
 import java.util.ArrayList;
@@ -12,76 +12,118 @@ import java.util.Scanner;
 public class Menu {
 
     private final Scanner sc = new Scanner(System.in);
-    private final String ENDPOINT_BASE = "https://parallelum.com.br/fipe/api/v1/";
 
     public void exibeMenu(){
-        JsonToObjectConverter converter = new JsonToObjectConverter();
+        System.out.println("""
+                **** OPÇÕES ****
+                     Carro     \s
+                     Caminhão  \s
+                     Moto      \s
+                """);
 
-        System.out.println("**** OPÇÕES ****\n" +
-                           "     Carro      \n" +
-                           "    Caminhão    \n" +
-                           "     Moto       \n");
+        String typeOfVehicle = askForTypeOfVehicle();
 
-        System.out.println("Digite uma das opções para consultar valores:");
-        String opcao = sc.nextLine();
+        List<VehicleBrand> vehicleBrands = generateListOfVehicleBrands(typeOfVehicle);
+        sortListBy(vehicleBrands, Comparator.comparing(VehicleBrand::name));
+        printList(vehicleBrands);
 
+        String brandCode = askForBrandCode();
+
+        List<VehicleModel> vehicleModels = generateListOfVehicleModels(typeOfVehicle, brandCode);
+        sortListBy(vehicleModels, Comparator.comparing(VehicleModel::name));
+        printList(vehicleModels);
+
+        String vehicleName = askForVehicleName();
+        vehicleModels = filterListOfBrandVehicleModelsAccordingToUserVehicle(vehicleModels, vehicleName);
+        printList(vehicleModels);
+
+        String vehicleModelCode = askForVehicleModelCode();
+        List<VehicleYear> vehicleYears = generateListOfVehicleModelsYears(typeOfVehicle, brandCode, vehicleModelCode);
+        sortListBy(vehicleYears, Comparator.comparing(VehicleYear::name));
+
+        List<VehicleInfo> vehicleInfos = getVehicleInfoForAllModelYears(vehicleYears, typeOfVehicle, brandCode, vehicleModelCode);
+        printList(vehicleInfos);
+
+    }
+
+    private String askForTypeOfVehicle() {
+        System.out.print("Digite uma das opções de tipo de veículo: ");
+        return sc.nextLine();
+    }
+
+    private String getVehicleBrandsEndpointAccordingToTypeOfVehicle(String typeOfVehicle) {
         String endpoint = "";
-        if(opcao.toLowerCase().contains("car".toLowerCase())){
+        String ENDPOINT_BASE = "https://parallelum.com.br/fipe/api/v1/";
+        if(typeOfVehicle.toLowerCase().contains("car".toLowerCase()))
             endpoint = ENDPOINT_BASE + "carros/marcas";
-        } else if (opcao.toLowerCase().contains("camin".toLowerCase())) {
+        else if (typeOfVehicle.toLowerCase().contains("camin".toLowerCase()))
             endpoint = ENDPOINT_BASE + "caminhoes/marcas";
-        } else if (opcao.toLowerCase().contains("mot".toLowerCase())) {
+        else if (typeOfVehicle.toLowerCase().contains("mot".toLowerCase()))
             endpoint = ENDPOINT_BASE + "motos/marcas";
+
+        return endpoint;
+    }
+
+    private List<VehicleBrand> generateListOfVehicleBrands(String typeOfVehicle) {
+        String vehicleBrandsEndpoint = getVehicleBrandsEndpointAccordingToTypeOfVehicle(typeOfVehicle);
+        String vehicleBrandsJson = ApiRequest.requestToApi(vehicleBrandsEndpoint);
+        return JsonToObjectConverter.convertJsonToListOfObjects(vehicleBrandsJson, VehicleBrand.class);
+    }
+
+    private <T> void sortListBy(List<T> list, Comparator<T> comparator) {
+        list.sort(comparator);
+    }
+
+    private <T> void printList(List<T> list) {
+        list.forEach(System.out::println);
+    }
+
+    private String askForBrandCode() {
+        System.out.print("Informe o código da marca para consultar: ");
+        return sc.nextLine();
+    }
+
+    private List<VehicleModel> generateListOfVehicleModels(String typeOfVehicle, String brandCode) {
+        String vehicleModelsEndpoint = getVehicleModelsEndpointAccordingToBrandCode(typeOfVehicle, brandCode);
+        String vehicleModelsJson = ApiRequest.requestToApi(vehicleModelsEndpoint);
+        return JsonToObjectConverter.returnJsonListDirectlyAsArray(vehicleModelsJson, VehicleModel.class);
+    }
+
+    private String getVehicleModelsEndpointAccordingToBrandCode(String typeOfVehicle, String brandCode) {
+        return getVehicleBrandsEndpointAccordingToTypeOfVehicle(typeOfVehicle) + "/" + brandCode + "/modelos/";
+    }
+
+    private String askForVehicleName() {
+        System.out.print("Digite um trecho do nome do veículo para consulta: ");
+        return sc.nextLine();
+    }
+
+    private List<VehicleModel> filterListOfBrandVehicleModelsAccordingToUserVehicle(List<VehicleModel> vehicleModels, String userVehicleName) {
+       return vehicleModels.stream().filter(vehicleModel -> vehicleModel.name().toLowerCase().contains(userVehicleName.toLowerCase())).toList();
+    }
+
+    private String askForVehicleModelCode() {
+        System.out.println("Digite o código do modelo do veículo para consultar valores:");
+        return sc.nextLine();
+    }
+
+    private List<VehicleYear> generateListOfVehicleModelsYears(String typeOfVehicle, String brandCode, String vehicleModelCode) {
+        String vehicleModelsYearsEndpoint = getVehicleModelsYearsEndpointAccordingToVehicleModelCode(typeOfVehicle, brandCode, vehicleModelCode);
+        String vehicleModelsYearsJson = ApiRequest.requestToApi(vehicleModelsYearsEndpoint);
+        return JsonToObjectConverter.convertJsonToListOfObjects(vehicleModelsYearsJson, VehicleYear.class);
+    }
+
+    private String getVehicleModelsYearsEndpointAccordingToVehicleModelCode(String typeOfVehicle, String brandCode, String vehicleModelCode) {
+        return getVehicleModelsEndpointAccordingToBrandCode(typeOfVehicle, brandCode) + vehicleModelCode + "/anos/";
+    }
+
+    private List<VehicleInfo> getVehicleInfoForAllModelYears(List<VehicleYear> vehicleYears, String typeOfVehicle, String brandCode, String vehicleModelCode) {
+        String vehicleInfo;
+        List<VehicleInfo> vehiclesInfo = new ArrayList<>();
+        for (VehicleYear vehicleYear : vehicleYears) {
+            vehicleInfo = ApiRequest.requestToApi(getVehicleModelsYearsEndpointAccordingToVehicleModelCode(typeOfVehicle, brandCode, vehicleModelCode) + vehicleYear.code());
+            vehiclesInfo.add(JsonToObjectConverter.convertJsonToObject(vehicleInfo, VehicleInfo.class));
         }
-
-        String json = ConsultaApi.consultaApi(endpoint);
-        System.out.println(json);
-
-        List<VehicleBrand> vehicleBrands = converter.convertJsonToListOfObjects(json, VehicleBrand.class);
-
-        vehicleBrands.stream()
-                .sorted(Comparator.comparing(VehicleBrand::name))
-                .forEach(v -> System.out.println("Code: " + v.cod() + " Brand: " + v.name()));
-
-        System.out.println("Informe o código da marca para consultar:");
-        int op = sc.nextInt();
-        sc.nextLine();
-
-        endpoint = endpoint + "/" + op + "/modelos";
-
-        json = ConsultaApi.consultaApi(endpoint);
-
-        Models model = converter.convertJsonToObject(json, Models.class);
-
-        model.models().stream()
-                .sorted(Comparator.comparing(VehicleModel::name))
-                .forEach(m -> System.out.println("Code: " + m.cod() + " Model: " + m.name()));
-
-        System.out.println("Digite um trecho do nome do veículo para consulta:");
-        String option = sc.nextLine();
-
-        model.models().stream()
-                .filter(m -> m.name().toLowerCase().contains(option.toLowerCase()))
-                .forEach(m -> System.out.println("Code: " + m.cod() + " Model: " + m.name()));
-
-        System.out.println("Digite o código do modelo para consultar valores:");
-        op = sc.nextInt();
-        sc.nextLine();
-
-        endpoint = endpoint + "/" + op + "/anos";
-        json = ConsultaApi.consultaApi(endpoint);
-
-        List<VehicleYear> years = converter.convertJsonToListOfObjects(json, VehicleYear.class);
-
-        List<VehicleInfo> vehicleInfos = new ArrayList<>();
-
-        for (int i = 0; i < years.size(); i++) {
-            json = ConsultaApi.consultaApi(endpoint + "/" + years.get(i).cod());
-
-            vehicleInfos.add(converter.convertJsonToObject(json, VehicleInfo.class));
-        }
-
-        vehicleInfos.forEach(System.out::println);
-
+        return vehiclesInfo;
     }
 }

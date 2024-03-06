@@ -6,9 +6,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class ConsultaApi {
+public class ApiRequest {
 
-    public static String consultaApi(String endpoint){
+    public static String requestToApi(String endpoint){
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(endpoint)).build();
