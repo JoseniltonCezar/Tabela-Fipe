@@ -1,7 +1,7 @@
 # Tabela-Fipe
 
 <div align="center">
-    <img src="[https://cdn-icons-png.flaticon.com/512/705/705082.png](https://www.transitto.com.br/wp-content/uploads/2023/03/tabela-fipe-2023.jpg)" alt="Logo" width="80" height="80">
+    <img src="https://www.transitto.com.br/wp-content/uploads/2023/03/tabela-fipe-2023.jpg" alt="Logo" width="80" height="80">
     <h2>Tabela-Fipe: A Java-based application that allows querying for vehicle prices</h2>
 </div>
 
@@ -22,7 +22,7 @@ Before building the app, ensure you have Java JDK 21 installed, since the progra
 To set up and run the project, clone the repository and install the dependencies:
 
 ```bash
-git clone [https](https://github.com/Nando-Cardoso/Tabela-Fipe.git)https://github.com/Nando-Cardoso/Tabela-Fipe.git
+git clone https://github.com/Nando-Cardoso/Tabela-Fipe.git
 cd Tabela-Fipe
 mvn build
 ```
