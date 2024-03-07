@@ -1,15 +1,6 @@
 package com.tabelafipe.main;
 
-import com.tabelafipe.model.*;
-import com.tabelafipe.services.ApiRequest;
-import com.tabelafipe.services.JsonToObjectConverter;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Scanner;
-
-import static com.tabelafipe.main.ListHelperMethods.sortListBy;
 
 public class Menu {
 
