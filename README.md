@@ -1,7 +1,7 @@
 # Tabela-Fipe
 
 <div align="center">
-    <img src="https://www.transitto.com.br/wp-content/uploads/2023/03/tabela-fipe-2023.jpg" alt="Logo" width="80" height="80">
+    <img src="https://www.transitto.com.br/wp-content/uploads/2023/03/tabela-fipe-2023.jpg" alt="Logo">
     <h2>Tabela-Fipe: A Java-based application that allows querying for vehicle prices</h2>
 </div>
 
@@ -49,8 +49,8 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 
 ![Java](https://img.shields.io/badge/Java-%23ED8B00.svg??style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring&logoColor=white)
-![Maven](https://miro.medium.com/v2/resize:fit:1358/1*U-p7zL9wxENueOTiUaOLiQ.png)
-![Jackson](https://www.logicbig.com/tutorials/misc/jackson/images/jackson.png)
+![Maven](https://img.shields.io/badge/-Maven-C71A36?logo=apachemaven&logocolor=black)
+![Jackson](https://img.shields.io/badge/-Jackson-004027?logo=jameson&logocolor=black)
 
 ## License
 
