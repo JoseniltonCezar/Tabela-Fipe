@@ -12,6 +12,6 @@ public record VehicleInfo(@JsonAlias("Valor") String valor,
 
     @Override
     public String toString() {
-        return "Modelo: " + this.modelo + " | Marca: " + this.marca + " | Valor: " + this.valor + " | Ano: " + this.ano + " | Combustível: " + this.combustivel;
+        return "Model: " + this.modelo + " | Brand: " + this.marca + " | Price: " + this.valor + " | Year: " + this.ano + " | Fuel Type: " + this.combustivel;
     }
 }

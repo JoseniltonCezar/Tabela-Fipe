@@ -8,30 +8,30 @@ public class Menu {
 
     public static void printInitialMenu(){
         System.out.println("""
-                **** OPÇÕES ****
-                     Carro     \s
-                     Caminhão  \s
-                     Moto      \s
+                **** OPTIONS ****
+                     Car     \s
+                     Truck   \s
+                     Bike    \s
                 """);
     }
 
     public static String askForTypeOfVehicle() {
-        System.out.print("Digite uma das opções de tipo de veículo: ");
+        System.out.print("Write the type of vehicle you want to search for: ");
         return sc.nextLine();
     }
 
     public static String askForBrandCode() {
-        System.out.print("Informe o código da marca para consultar: ");
+        System.out.print("Write the brand code to filter the models by brand: ");
         return sc.nextLine();
     }
 
     public static String askForVehicleName() {
-        System.out.print("Digite um trecho do nome do veículo para consulta: ");
+        System.out.print("Type the vehicle's name or a part of it to filter its models: ");
         return sc.nextLine();
     }
 
     public static String askForVehicleModelCode() {
-        System.out.println("Digite o código do modelo do veículo para consultar valores:");
+        System.out.print("Type the vehicle's model code to get the vehicle's details: ");
         return sc.nextLine();
     }
 }

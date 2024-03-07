@@ -10,11 +10,11 @@ public final class FipeTableEndpointBuilder {
     public FipeTableEndpointBuilder() {}
 
     String getVehicleBrandsEndpointAccordingToTypeOfVehicle() {
-        if(this.typeOfVehicle.toLowerCase().contains("carro".toLowerCase()))
+        if(this.typeOfVehicle.toLowerCase().contains("car".toLowerCase()))
             return ENDPOINT_BASE + "carros/marcas";
-        else if (this.typeOfVehicle.toLowerCase().contains("caminh".toLowerCase()))
+        else if (this.typeOfVehicle.toLowerCase().contains("truck".toLowerCase()))
             return ENDPOINT_BASE + "caminhoes/marcas";
-        else if (this.typeOfVehicle.toLowerCase().contains("moto".toLowerCase()))
+        else if (this.typeOfVehicle.toLowerCase().contains("bike".toLowerCase()))
             return ENDPOINT_BASE + "motos/marcas";
         return "Invalid Endpoint";
     }
