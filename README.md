@@ -1,8 +1,8 @@
-# Tabela-Fipe
+# Fipe-Table
 
 <div align="center">
-    <img src="https://www.transitto.com.br/wp-content/uploads/2023/03/tabela-fipe-2023.jpg" alt="Logo">
-    <h2>Tabela-Fipe: A Java-based application that allows querying for vehicle prices</h2>
+    <img src="https://githubdocs-nando-cardoso.s3.us-east-2.amazonaws.com/fipeTableWhiteBg.png" alt="Logo" width=140 height=140 style="border-radius: 25">
+    <h2>A Java-based application that allows querying for vehicle prices</h2>
 </div>
 
 ## What is the Fipe Table?
