@@ -9,29 +9,28 @@ public class Menu {
     public static void printInitialMenu(){
         System.out.println("""
                 **** OPTIONS ****
-                     Car     \s
-                     Truck   \s
-                     Bike    \s
-                """);
+                    - Car
+                    - Truck
+                    - Bike""");
     }
 
     public static String askForTypeOfVehicle() {
-        System.out.print("Write the type of vehicle you want to search for: ");
+        System.out.print("\nWrite the type of vehicle you want to search for: ");
         return sc.nextLine();
     }
 
     public static String askForBrandCode() {
-        System.out.print("Write the brand code to filter the models by brand: ");
+        System.out.print("\nWrite the brand code to filter the models by brand: ");
         return sc.nextLine();
     }
 
     public static String askForVehicleName() {
-        System.out.print("Type the vehicle's name or a part of it to filter its models: ");
+        System.out.print("\nType the vehicle's name or a part of it to filter its models: ");
         return sc.nextLine();
     }
 
     public static String askForVehicleModelCode() {
-        System.out.print("Type the vehicle's model code to get the vehicle's details: ");
+        System.out.print("\nType the vehicle's model code to get the vehicle's details: ");
         return sc.nextLine();
     }
 }

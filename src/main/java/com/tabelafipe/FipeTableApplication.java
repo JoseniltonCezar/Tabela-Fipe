@@ -15,10 +15,10 @@ import static com.tabelafipe.main.Menu.*;
 import static com.tabelafipe.main.VehiclesListsGenerator.*;
 
 @SpringBootApplication
-public class FipeTabbleApplication implements CommandLineRunner {
+public class FipeTableApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FipeTabbleApplication.class, args);
+		SpringApplication.run(FipeTableApplication.class, args);
 	}
 
 	@Override
