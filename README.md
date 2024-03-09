@@ -22,7 +22,7 @@ Before building the app, ensure you have Java JDK 21 installed, since the progra
 To set up and run the project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/Nando-Cardoso/Tabela-Fipe.git
+git clone https://github.com/JoseniltonCezar/Tabela-Fipe.git
 cd Tabela-Fipe
 mvn build
 ```
