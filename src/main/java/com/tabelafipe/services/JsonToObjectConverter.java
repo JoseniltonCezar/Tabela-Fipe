@@ -9,9 +9,9 @@ import java.util.List;
 
 public class JsonToObjectConverter {
 
-    static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    static public <T> T convertJsonToObject(String json, Class<T> classe) {
+    public static <T> T convertJsonToObject(String json, Class<T> classe) {
         try {
             return mapper.readValue(json, classe);
         } catch (JsonProcessingException e) {
@@ -19,7 +19,7 @@ public class JsonToObjectConverter {
         }
     }
 
-    static public <T> List<T> convertJsonToListOfObjects(String json, Class<T> classe) {
+    public static <T> List<T> convertJsonToListOfObjects(String json, Class<T> classe) {
         CollectionType returnJsonAsList = mapper.getTypeFactory().constructCollectionType(List.class, classe);
         try{
             json = getJsonArrayContentIfParentElementIsAnObject(json);
